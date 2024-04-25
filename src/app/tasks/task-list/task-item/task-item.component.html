@@ -1,4 +1,6 @@
 <li class="list-group-item">
   <input class="form-check-input me-1" type="checkbox" value="{{ task.isDone }}" [checked]="task.isDone">
-  <label class="form-check-label">{{ task.title }} - {{ task.detail }}</label>
+  <a href="#" (click)="onSelected()">
+    <label class="form-check-label">{{ task.title }} - {{ task.detail }}</label>
+  </a>
 </li>

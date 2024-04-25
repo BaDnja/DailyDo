@@ -15,4 +15,8 @@ export class TaskItemComponent {
   constructor(private tasksService: TasksService) {
   }
 
+  onSelected() {
+    this.tasksService.taskSelected.emit(this.task);
+  }
+
 }

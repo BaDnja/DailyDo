@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {TaskListComponent} from "./task-list/task-list.component";
 import {TasksService} from "./tasks.service";
+import {Task} from "./task.model";
 
 @Component({
   selector: 'app-tasks',
@@ -13,5 +14,19 @@ import {TasksService} from "./tasks.service";
   providers: [TasksService],
 })
 export class TasksComponent {
+  selectedTask!: Task;
+
+  constructor(private tasksService: TasksService) {
+  }
+
+  ngOnInit() {
+    this.tasksService.taskSelected
+      .subscribe(
+        (task: Task) => {
+          this.selectedTask = task;
+          // console.log(this.selectedTask);
+        }
+      )
+  }
 
 }
