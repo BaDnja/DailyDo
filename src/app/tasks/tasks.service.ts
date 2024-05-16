@@ -3,11 +3,15 @@ import {EventEmitter, Injectable} from "@angular/core";
 
 @Injectable({providedIn: "root"})
 export class TasksService {
-  private tasks: Task[] = [
-    new Task("1", "Clean the fridge", "Also the freezer"),
-    new Task("2", "Make lunch", "Need to buy chicken."),];
+  private tasks: Task[] = [];
 
   getTasks(): Task[] {
     return this.tasks.slice();
+  }
+
+  appendTask(title: string, detail: string) {
+    const newId= String(this.tasks.length + 1);
+    const newTask: Task = new Task(newId, title, detail)
+    this.tasks.push(newTask);
   }
 }

@@ -1,4 +1,15 @@
 <div class="d-flex flex-column">
+  <form [formGroup]="addNewTaskForm" (ngSubmit)="onAddNew()">
+    <div>
+      <label for="title">Title</label>
+      <input id="title" type="text" formControlName="title">
+    </div>
+    <div>
+      <label for="detail">Detail</label>
+      <input id="detail" type="text" formControlName="detail">
+    </div>
+    <button class="btn btn-success" type="submit">Add</button>
+  </form>
   <ul class="list-group">
     <app-task-item *ngFor="let taskElement of tasks"
     [task] = "taskElement"></app-task-item>

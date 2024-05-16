@@ -2,6 +2,6 @@
   <input [formControl]="taskCheckbox" class="form-check-input me-1" type="checkbox" value="{{ task.isDone }}"
          [checked]="task.isDone">
   <a [routerLink]="['/tasks', task.id]">
-    <label class="form-check-label">{{ task.title }} - {{ task.detail }}</label>
+    <label class="form-check-label">{{ task.title }}</label>
   </a>
 </li>
