@@ -1,1 +1,8 @@
-<p>task-detail works!</p>
+<h2>Task Details</h2>
+
+<div *ngIf="task">
+  <h3>{{task.title!}}</h3>
+  <h4>{{task.detail}}</h4>
+  <p>{{task.creationDatetime.toDateString()}}</p>
+  <span>{{task.isDone ? "Done" : "Not Done"}}</span>
+</div>
