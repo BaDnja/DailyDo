@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Task} from "../task.model";
 import {TaskItemComponent} from "./task-item/task-item.component";
 import {NgForOf} from "@angular/common";
@@ -14,7 +14,7 @@ import {TasksService} from "../tasks.service";
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
-export class TaskListComponent {
+export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
 
   constructor(private tasksService: TasksService) {
@@ -22,6 +22,5 @@ export class TaskListComponent {
 
   ngOnInit() {
     this.tasks = this.tasksService.getTasks();
-    console.log(this.tasks);
   }
 }

@@ -1,0 +1,4 @@
+.list-group-item {
+  overflow: hidden;
+  white-space: nowrap;
+}
