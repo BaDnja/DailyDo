@@ -2,12 +2,14 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {Task} from "../../task.model";
 import {TasksService} from "../../tasks.service";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-task-item',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './task-item.component.html',
   styleUrl: './task-item.component.css'
@@ -26,9 +28,5 @@ export class TaskItemComponent implements OnInit {
         task.isDone = value;
       }
     })
-  }
-
-  onSelected() {
-    this.tasksService.taskSelected.emit(this.task);
   }
 }

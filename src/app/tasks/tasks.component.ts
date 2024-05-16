@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {TaskListComponent} from "./task-list/task-list.component";
 import {TasksService} from "./tasks.service";
-import {Task} from "./task.model";
 
 @Component({
   selector: 'app-tasks',
@@ -13,18 +12,6 @@ import {Task} from "./task.model";
   styleUrl: './tasks.component.css',
   providers: [TasksService],
 })
-export class TasksComponent implements OnInit {
-  selectedTask!: Task;
-
-  constructor(private tasksService: TasksService) {
-  }
-
-  ngOnInit() {
-    this.tasksService.taskSelected.subscribe(
-      (task: Task) => {
-        this.selectedTask = task;
-      }
-    )
-  }
+export class TasksComponent {
 
 }

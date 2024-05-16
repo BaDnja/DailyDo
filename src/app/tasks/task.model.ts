@@ -1,11 +1,13 @@
 
 export class Task {
+  public id: string;
   public title: string;
   public detail: string;
   public creationDatetime: Date;
   public isDone: boolean = false;
 
-  constructor(title: string, detail: string) {
+  constructor(id: string,title: string, detail: string) {
+    this.id = id;
     this.title = title;
     this.detail = detail;
     this.creationDatetime = new Date();

@@ -3,10 +3,9 @@ import {EventEmitter, Injectable} from "@angular/core";
 
 @Injectable()
 export class TasksService {
-  taskSelected = new EventEmitter<Task>;
   private tasks: Task[] = [
-    new Task("Clean the fridge", "Also the freezer"),
-    new Task("Make lunch", "Need to buy chicken."),];
+    new Task("1", "Clean the fridge", "Also the freezer"),
+    new Task("2", "Make lunch", "Need to buy chicken."),];
 
   getTasks(): Task[] {
     return this.tasks.slice();
