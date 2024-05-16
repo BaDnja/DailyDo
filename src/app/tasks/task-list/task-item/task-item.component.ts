@@ -18,5 +18,4 @@ export class TaskItemComponent {
   onSelected() {
     this.tasksService.taskSelected.emit(this.task);
   }
-
 }
