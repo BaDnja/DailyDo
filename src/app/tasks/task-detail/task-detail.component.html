@@ -6,3 +6,19 @@
   <p>Created at: {{task.creationDatetime.toDateString()}}</p>
   <span>{{task.isDone ? "Done" : "Not Done"}}</span>
 </div>
+
+<form [formGroup]="updateTaskForm" (ngSubmit)="onUpdate()" >
+  <div>
+    <label for="title">Title</label>
+    <input id="title" type="text" formControlName="title">
+  </div>
+  <div>
+    <label for="detail">Detail</label>
+    <input id="detail" type="text" formControlName="detail">
+  </div>
+  <div>
+    <label for="isDone">Done</label>
+    <input id="isDone" formControlName="isDone" class="form-check-input me-1" type="checkbox">
+  </div>
+  <button class="btn btn-success" type="submit">Update</button>
+</form>

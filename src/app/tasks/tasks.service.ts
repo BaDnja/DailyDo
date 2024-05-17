@@ -1,5 +1,6 @@
 import {Task} from "./task.model";
 import {Injectable} from "@angular/core";
+import {update} from "@angular-devkit/build-angular/src/tools/esbuild/angular/compilation/parallel-worker";
 
 @Injectable({providedIn: "root"})
 export class TasksService {
