@@ -1,6 +1,5 @@
 <li class="list-group-item">
-  <input [formControl]="taskCheckbox" class="form-check-input me-1" type="checkbox" value="{{ task.isDone }}"
-         [checked]="task.isDone">
+  <input [formControl]="taskCheckbox" class="form-check-input me-1" type="checkbox">
   <a [routerLink]="['/tasks', task.id]">
     <label class="form-check-label">{{ task.title }}</label>
   </a>

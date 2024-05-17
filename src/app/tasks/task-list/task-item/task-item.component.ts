@@ -16,17 +16,16 @@ import {RouterLink} from "@angular/router";
 })
 export class TaskItemComponent implements OnInit {
   @Input() task!: Task;
-  taskCheckbox: FormControl = new FormControl();
+  taskCheckbox!: FormControl
 
   constructor(private tasksService: TasksService) {
   }
 
   ngOnInit() {
+    this.taskCheckbox = new FormControl(this.task.isDone);
     this.taskCheckbox.valueChanges.subscribe(value => {
-      const task = this.tasksService.getTasks().find(task => task == this.task);
-      if (task) {
-        task.isDone = value;
-      }
+      this.task.isDone = value;
+      this.tasksService.updateTask(this.task);
     })
   }
 }

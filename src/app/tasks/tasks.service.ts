@@ -1,5 +1,5 @@
 import {Task} from "./task.model";
-import {EventEmitter, Injectable} from "@angular/core";
+import {Injectable} from "@angular/core";
 
 @Injectable({providedIn: "root"})
 export class TasksService {
@@ -9,8 +9,15 @@ export class TasksService {
     return this.tasks.slice();
   }
 
+  updateTask(updatedTask: Task) {
+    const taskIndex = this.tasks.findIndex(task => task.id === updatedTask.id);
+    if (taskIndex !== -1) {
+      this.tasks[taskIndex] = updatedTask;
+    }
+  }
+
   appendTask(title: string, detail: string) {
-    const newId= String(this.tasks.length + 1);
+    const newId = String(this.tasks.length + 1);
     const newTask: Task = new Task(newId, title, detail)
     this.tasks.push(newTask);
   }
