@@ -40,5 +40,3 @@ export class TaskListComponent implements OnInit {
     }
   }
 }
-
-// TODO: Delete task

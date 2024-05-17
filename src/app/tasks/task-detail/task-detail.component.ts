@@ -1,17 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TasksService} from "../tasks.service";
 import {Task} from "../task.model";
 import {NgIf} from "@angular/common";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {update} from "@angular-devkit/build-angular/src/tools/esbuild/angular/compilation/parallel-worker";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-task-detail',
   standalone: true,
   imports: [
     NgIf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   templateUrl: './task-detail.component.html',
   styleUrl: './task-detail.component.css'
@@ -19,13 +19,11 @@ import {update} from "@angular-devkit/build-angular/src/tools/esbuild/angular/co
 export class TaskDetailComponent implements OnInit {
   task!: Task;
   updateTaskForm!: FormGroup
-  constructor(private route: ActivatedRoute, private tasksService: TasksService,
-              private formBuilder: FormBuilder) {
-  }
 
-  getTaskStatus() {
-    console.log(this.task.isDone)
-    return this.task.isDone
+  constructor(private route: ActivatedRoute,
+              private tasksService: TasksService,
+              private formBuilder: FormBuilder,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -48,7 +46,12 @@ export class TaskDetailComponent implements OnInit {
       isDone: this.updateTaskForm.value.isDone,
       creationDatetime: this.task.creationDatetime
     }
-    this.tasksService.updateTask(updatedTask)
+    this.tasksService.updateTask(updatedTask);
+  }
+
+  onDelete() {
+    this.tasksService.deleteTask(this.task.id);
+    this.router.navigate(['/'])
   }
 
 }
