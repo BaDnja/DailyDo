@@ -4,6 +4,8 @@ import {TasksService} from "../tasks.service";
 import {Task} from "../task.model";
 import {NgIf} from "@angular/common";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {AlertTypeEnum} from "../../alert/types/alertType.enum";
+import {AlertService} from "../../alert/alert.service";
 
 @Component({
   selector: 'app-task-detail',
@@ -14,7 +16,8 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
     FormsModule
   ],
   templateUrl: './task-detail.component.html',
-  styleUrl: './task-detail.component.css'
+  styleUrl: './task-detail.component.css',
+
 })
 export class TaskDetailComponent implements OnInit {
   task!: Task;
@@ -23,7 +26,8 @@ export class TaskDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private tasksService: TasksService,
               private formBuilder: FormBuilder,
-              private router: Router) {
+              private router: Router,
+              private alertService: AlertService) {
   }
 
   ngOnInit() {
@@ -38,6 +42,20 @@ export class TaskDetailComponent implements OnInit {
     })
   }
 
+  showAfterUpdateMessage() {
+    this.alertService.setAlert({
+      type: AlertTypeEnum.success,
+      text: 'Item updated'
+    })
+  }
+
+  showAfterDeleteMessage() {
+    this.alertService.setAlert({
+      type: AlertTypeEnum.info,
+      text: 'Item deleted'
+    })
+  }
+
   onUpdate() {
     const updatedTask = {
       id: this.task.id,
@@ -47,11 +65,12 @@ export class TaskDetailComponent implements OnInit {
       creationDatetime: this.task.creationDatetime
     }
     this.tasksService.updateTask(updatedTask);
+    this.showAfterUpdateMessage();
   }
 
   onDelete() {
     this.tasksService.deleteTask(this.task.id);
     this.router.navigate(['/'])
+    this.showAfterDeleteMessage();
   }
-
 }

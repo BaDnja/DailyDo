@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Task} from "../task.model";
 import {TaskItemComponent} from "./task-item/task-item.component";
 import {NgForOf} from "@angular/common";
 import {TasksService} from "../tasks.service";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
+import {AlertTypeEnum} from "../../alert/types/alertType.enum";
+import {AlertService} from "../../alert/alert.service";
 
 @Component({
   selector: 'app-task-list',
@@ -18,16 +20,26 @@ import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 })
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
+
   addNewTaskForm = this.formBuilder.nonNullable.group({
     title: ['', [Validators.required]],
     detail: ''
   });
 
-  constructor(private tasksService: TasksService, private formBuilder: FormBuilder) {
+  constructor(private tasksService: TasksService,
+              private formBuilder: FormBuilder,
+              private alertService: AlertService) {
   }
 
   ngOnInit() {
     this.tasks = this.tasksService.getTasks();
+  }
+
+  showSuccessMessage() {
+    this.alertService.setAlert({
+      type: AlertTypeEnum.success,
+      text: 'Item added'
+    })
   }
 
   onAddNew() {
@@ -37,6 +49,7 @@ export class TaskListComponent implements OnInit {
       this.tasksService.appendTask(title!, description!);
       this.ngOnInit()
       this.addNewTaskForm.reset();
+      this.showSuccessMessage();
     }
   }
 }
