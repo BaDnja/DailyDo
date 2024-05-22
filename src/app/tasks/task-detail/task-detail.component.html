@@ -25,3 +25,5 @@
 <form (ngSubmit)="onDelete()">
   <button id="item-delete-button" class="btn btn-danger" type="submit">Delete</button>
 </form>
+
+<app-confirmation-dialog *ngIf="showConfirmation" (confirmed)="onConfirmDeletion($event)"></app-confirmation-dialog>
