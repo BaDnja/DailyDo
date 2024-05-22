@@ -6,6 +6,7 @@ import {NgIf} from "@angular/common";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AlertTypeEnum} from "../../alert/types/alertType.enum";
 import {AlertService} from "../../alert/alert.service";
+import {ConfirmationDialogComponent} from "../../confirmation-dialog/confirmation-dialog.component";
 
 @Component({
   selector: 'app-task-detail',
@@ -13,7 +14,8 @@ import {AlertService} from "../../alert/alert.service";
   imports: [
     NgIf,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ConfirmationDialogComponent
   ],
   templateUrl: './task-detail.component.html',
   styleUrl: './task-detail.component.css',
@@ -22,6 +24,7 @@ import {AlertService} from "../../alert/alert.service";
 export class TaskDetailComponent implements OnInit {
   task!: Task;
   updateTaskForm!: FormGroup
+  showConfirmation = false;
 
   constructor(private route: ActivatedRoute,
               private tasksService: TasksService,
@@ -68,9 +71,17 @@ export class TaskDetailComponent implements OnInit {
     this.showAfterUpdateMessage();
   }
 
+
+  onConfirmDeletion(confirm: boolean) {
+    this.showConfirmation = false;
+    if (confirm) {
+      this.tasksService.deleteTask(this.task.id);
+      this.router.navigate(['/'])
+      this.showAfterDeleteMessage();
+    }
+  }
+
   onDelete() {
-    this.tasksService.deleteTask(this.task.id);
-    this.router.navigate(['/'])
-    this.showAfterDeleteMessage();
+    this.showConfirmation = true;
   }
 }
