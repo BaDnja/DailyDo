@@ -3,11 +3,11 @@
 <div *ngIf="task">
   <h3>Title: {{task.title!}}</h3>
   <h4>Details: {{task.detail}}</h4>
-  <p>Created at: {{task.creationDatetime.toDateString()}}</p>
+  <p>Created at: {{task.creationDatetime}}</p>
   <span>{{task.isDone ? "Done" : "Not Done"}}</span>
 </div>
 
-<form [formGroup]="updateTaskForm" (ngSubmit)="onUpdate()" >
+<form *ngIf="task" [formGroup]="updateTaskForm" (ngSubmit)="onUpdate()" >
   <div>
     <label for="title">Title</label>
     <input id="title" type="text" formControlName="title">
@@ -22,7 +22,8 @@
   </div>
   <button class="btn btn-success" type="submit">Update</button>
 </form>
-<form (ngSubmit)="onDelete()">
+
+<form *ngIf="task" (ngSubmit)="onDelete()">
   <button id="item-delete-button" class="btn btn-danger" type="submit">Delete</button>
 </form>
 
