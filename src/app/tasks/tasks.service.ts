@@ -1,45 +1,51 @@
 import {Task} from "./task.model";
 import {Injectable} from "@angular/core";
 import {StorageService} from "../storage.service";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({providedIn: "root"})
 export class TasksService {
-  private tasks: Task[] = [];
+  private tasksSubject = new BehaviorSubject<any[]>(this.getTasks());
   private readonly localStorageKey = "tasks";
+  tasks$ = this.tasksSubject.asObservable();
 
   constructor(private storage: StorageService) {
+    window.addEventListener('storage', (event) => {
+      if (event.key === this.localStorageKey) {
+        this.tasksSubject.next(this.getTasks());
+      }
+    })
   }
 
   getTasks(): Task[] {
     return this.storage.getItem(this.localStorageKey);
   }
 
-  saveTasks() {
-    this.storage.setItem(this.localStorageKey, JSON.stringify(this.tasks));
+  saveTasks(tasks: any[]): void {
+    this.storage.setItem(this.localStorageKey, JSON.stringify(tasks));
+    this.tasksSubject.next(tasks);
   }
 
   updateTask(updatedTask: Task) {
     const tasks = this.getTasks();
     const taskIndex = tasks.findIndex(task => task.id === updatedTask.id);
     if (taskIndex !== -1) {
-      this.tasks[taskIndex] = updatedTask;
+      tasks[taskIndex] = updatedTask;
     }
-    this.saveTasks();
-  }
-
-  appendTask(title: string, detail: string) {
-    const newId = String(this.tasks.length + 1);
-    const newTask: Task = new Task(newId, title, detail)
-    this.tasks.push(newTask);
-    this.saveTasks();
+    this.saveTasks(tasks);
   }
 
   deleteTask(id: string) {
     const tasks = this.getTasks();
     const taskIndex = tasks.findIndex(task => task.id === id);
     if (taskIndex !== -1) {
-      this.tasks.splice(taskIndex, 1)
+      tasks.splice(taskIndex, 1)
     }
-    this.saveTasks();
+    this.saveTasks(tasks);
+  }
+
+  clearTasks() {
+    this.storage.clearData();
+    this.tasksSubject.next([]);
   }
 }

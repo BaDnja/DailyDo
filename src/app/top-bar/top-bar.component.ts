@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {StorageService} from "../storage.service";
+import {TasksService} from "../tasks/tasks.service";
 
 @Component({
   selector: 'app-top-bar',
@@ -13,10 +13,10 @@ import {StorageService} from "../storage.service";
 })
 export class TopBarComponent {
 
-  constructor(private storage: StorageService) {
+  constructor(private tasksService: TasksService) {
   }
 
   clearData() {
-    this.storage.clearData();
+    this.tasksService.clearTasks();
   }
 }
