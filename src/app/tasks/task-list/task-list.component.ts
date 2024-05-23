@@ -47,9 +47,11 @@ export class TaskListComponent implements OnInit {
   }
 
   onAddNew() {
-    this.appendTask();
-    this.addNewTaskForm.reset();
-    this.showSuccessMessage();
+    if (!this.addNewTaskForm.invalid) {
+      this.appendTask();
+      this.addNewTaskForm.reset();
+      this.showSuccessMessage();
+    }
   }
 
   appendTask() {
