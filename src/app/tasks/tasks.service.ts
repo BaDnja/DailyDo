@@ -1,32 +1,51 @@
 import {Task} from "./task.model";
 import {Injectable} from "@angular/core";
-import {update} from "@angular-devkit/build-angular/src/tools/esbuild/angular/compilation/parallel-worker";
+import {StorageService} from "../storage.service";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({providedIn: "root"})
 export class TasksService {
-  private tasks: Task[] = [];
+  private tasksSubject = new BehaviorSubject<any[]>(this.getTasks());
+  private readonly localStorageKey = "tasks";
+  tasks$ = this.tasksSubject.asObservable();
+
+  constructor(private storage: StorageService) {
+    window.addEventListener('storage', (event) => {
+      if (event.key === this.localStorageKey) {
+        this.tasksSubject.next(this.getTasks());
+      }
+    })
+  }
 
   getTasks(): Task[] {
-    return this.tasks.slice();
+    return this.storage.getItem(this.localStorageKey);
+  }
+
+  saveTasks(tasks: any[]): void {
+    this.storage.setItem(this.localStorageKey, JSON.stringify(tasks));
+    this.tasksSubject.next(tasks);
   }
 
   updateTask(updatedTask: Task) {
-    const taskIndex = this.tasks.findIndex(task => task.id === updatedTask.id);
+    const tasks = this.getTasks();
+    const taskIndex = tasks.findIndex(task => task.id === updatedTask.id);
     if (taskIndex !== -1) {
-      this.tasks[taskIndex] = updatedTask;
+      tasks[taskIndex] = updatedTask;
     }
-  }
-
-  appendTask(title: string, detail: string) {
-    const newId = String(this.tasks.length + 1);
-    const newTask: Task = new Task(newId, title, detail)
-    this.tasks.push(newTask);
+    this.saveTasks(tasks);
   }
 
   deleteTask(id: string) {
-    const taskIndex = this.tasks.findIndex(task => task.id === id);
+    const tasks = this.getTasks();
+    const taskIndex = tasks.findIndex(task => task.id === id);
     if (taskIndex !== -1) {
-      this.tasks.splice(taskIndex, 1)
+      tasks.splice(taskIndex, 1)
     }
+    this.saveTasks(tasks);
+  }
+
+  clearTasks() {
+    this.storage.clearData();
+    this.tasksSubject.next([]);
   }
 }

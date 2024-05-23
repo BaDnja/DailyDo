@@ -32,7 +32,9 @@ export class TaskListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tasks = this.tasksService.getTasks();
+    this.tasksService.tasks$.subscribe(tasks => {
+      this.tasks = tasks
+    })
   }
 
   showSuccessMessage() {
@@ -43,13 +45,23 @@ export class TaskListComponent implements OnInit {
   }
 
   onAddNew() {
+    this.appendTask();
+    this.ngOnInit()
+    this.addNewTaskForm.reset();
+    this.showSuccessMessage();
+  }
+
+  appendTask() {
     if (!this.addNewTaskForm.invalid) {
-      const title = this.addNewTaskForm.value.title;
-      const description = this.addNewTaskForm.value.detail;
-      this.tasksService.appendTask(title!, description!);
-      this.ngOnInit()
-      this.addNewTaskForm.reset();
-      this.showSuccessMessage();
+      const title = this.addNewTaskForm.value.title!;
+      const detail = this.addNewTaskForm.value.detail!.trim();
+      const newTask = new Task(String(this.tasks.length + 1), title, detail)
+      this.tasks = [...this.tasks, newTask];
+      this.saveTasks();
     }
+  }
+
+  saveTasks(): void {
+    this.tasksService.saveTasks(this.tasks);
   }
 }

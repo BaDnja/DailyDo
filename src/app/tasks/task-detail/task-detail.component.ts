@@ -60,15 +60,17 @@ export class TaskDetailComponent implements OnInit {
   }
 
   onUpdate() {
-    const updatedTask = {
-      id: this.task.id,
-      title: this.updateTaskForm.value.title,
-      detail: this.updateTaskForm.value.detail,
-      isDone: this.updateTaskForm.value.isDone,
-      creationDatetime: this.task.creationDatetime
+    if (!this.updateTaskForm.invalid) {
+      const updatedTask = {
+        id: this.task.id,
+        title: this.updateTaskForm.value.title,
+        detail: this.updateTaskForm.value.detail,
+        isDone: this.updateTaskForm.value.isDone,
+        creationDatetime: this.task.creationDatetime
+      }
+      this.tasksService.updateTask(updatedTask);
+      this.showAfterUpdateMessage();
     }
-    this.tasksService.updateTask(updatedTask);
-    this.showAfterUpdateMessage();
   }
 
 

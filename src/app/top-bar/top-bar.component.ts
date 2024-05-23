@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {RouterLink} from "@angular/router";
+import {TasksService} from "../tasks/tasks.service";
 
 @Component({
   selector: 'app-top-bar',
@@ -12,4 +13,10 @@ import {RouterLink} from "@angular/router";
 })
 export class TopBarComponent {
 
+  constructor(private tasksService: TasksService) {
+  }
+
+  clearData() {
+    this.tasksService.clearTasks();
+  }
 }
