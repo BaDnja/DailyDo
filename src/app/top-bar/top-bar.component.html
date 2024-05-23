@@ -6,9 +6,11 @@
           <a routerLink="/" class="nav-link">DailyDo</a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link" (click)="clearData()">Clear Data</a>
+          <a href="#" class="nav-link" (click)="onClearData()">Clear Data</a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+
+<app-confirmation-dialog *ngIf="showConfirmation" (confirmed)="onConfirmDeletion($event)"></app-confirmation-dialog>
