@@ -33,8 +33,10 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit() {
     this.tasksService.tasks$.subscribe(tasks => {
-      this.tasks = tasks
+      this.tasks = tasks;
     })
+
+    this.tasks = this.tasksService.getTasks();
   }
 
   showSuccessMessage() {
@@ -46,7 +48,6 @@ export class TaskListComponent implements OnInit {
 
   onAddNew() {
     this.appendTask();
-    this.ngOnInit()
     this.addNewTaskForm.reset();
     this.showSuccessMessage();
   }

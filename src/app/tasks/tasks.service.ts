@@ -1,20 +1,16 @@
 import {Task} from "./task.model";
 import {Injectable} from "@angular/core";
-import {StorageService} from "../storage.service";
+import {StorageService} from "../shared/services/storage/storage.service";
 import {BehaviorSubject} from "rxjs";
 
 @Injectable({providedIn: "root"})
 export class TasksService {
   private tasksSubject = new BehaviorSubject<any[]>(this.getTasks());
-  private readonly localStorageKey = "tasks";
+  private readonly localStorageKey: string = 'tasks';
+
   tasks$ = this.tasksSubject.asObservable();
 
   constructor(private storage: StorageService) {
-    window.addEventListener('storage', (event) => {
-      if (event.key === this.localStorageKey) {
-        this.tasksSubject.next(this.getTasks());
-      }
-    })
   }
 
   getTasks(): Task[] {
