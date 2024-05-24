@@ -46,9 +46,9 @@ export class ListsService {
       lists.splice(listIndex, 1);
     }
     this.saveLists(lists);
-    const tasks = this.tasksService.getTasks().filter(task => task.listId === id);
+    const tasks = this.tasksService.getTasks();
     tasks.forEach(task => {
-      task.listId = '';
+      task.listId === id ? task.listId = '' : task.listId
     })
     this.tasksService.saveTasks(tasks);
 

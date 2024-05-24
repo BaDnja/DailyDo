@@ -3,10 +3,12 @@ import {ConfirmationDialogComponent} from "../../confirmation-dialog/confirmatio
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {List} from "../list.model";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {ListsService} from "../lists.service";
 import {AlertService} from "../../alert/alert.service";
 import {AlertTypeEnum} from "../../alert/types/alertType.enum";
+import {Task} from "../../tasks/task.model";
+import {TasksService} from "../../tasks/tasks.service";
 
 @Component({
   selector: 'app-list-detail',
@@ -16,13 +18,15 @@ import {AlertTypeEnum} from "../../alert/types/alertType.enum";
     FormsModule,
     NgForOf,
     NgIf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './list-detail.component.html',
   styleUrl: './list-detail.component.css'
 })
 export class ListDetailComponent implements OnInit {
   list!: List;
+  tasks!: Task[];
   updateListForm!: FormGroup;
   showConfirmation: boolean = false;
 
@@ -30,7 +34,8 @@ export class ListDetailComponent implements OnInit {
               private listService: ListsService,
               private formBuilder: FormBuilder,
               private router: Router,
-              private alertService: AlertService) {
+              private alertService: AlertService,
+              private tasksService: TasksService) {
   }
 
   ngOnInit() {
@@ -40,7 +45,8 @@ export class ListDetailComponent implements OnInit {
 
     this.updateListForm = this.formBuilder.nonNullable.group({
       title: [this.list.title, [Validators.required]]
-    })
+    });
+    this.tasks = this.tasksService.getTasks().filter(task => task.listId === this.list.id);
   }
 
   showAfterUpdateMessage() {

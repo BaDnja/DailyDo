@@ -5,12 +5,22 @@
     <label for="title">Title</label>
     <input id="title" type="text" formControlName="title">
   </div>
-
   <button class="btn btn-success" type="submit">Update</button>
 </form>
 
 <form *ngIf="list" (ngSubmit)="onDelete()">
   <button id="item-delete-button" class="btn btn-danger" type="submit">Delete</button>
 </form>
+<hr>
+
+<div class="d-flex flex-column">
+  <ul *ngFor="let taskElement of tasks" class="list-group">
+    <li class="list-group-item">
+      <a [routerLink]="['/tasks', taskElement.id]">
+        <label class="form-check-label">{{ taskElement.title }}</label>
+      </a>
+    </li>
+  </ul>
+</div>
 
 <app-confirmation-dialog *ngIf="showConfirmation" (confirmed)="onConfirmDeletion($event)"></app-confirmation-dialog>
