@@ -17,4 +17,12 @@ export class StorageService {
   clearData() {
     localStorage.clear();
   }
+
+  deleteAllTasks(key: string) {
+    localStorage.removeItem(key);
+  }
+
+  deleteAllLists(key: string) {
+    localStorage.removeItem(key);
+  }
 }
