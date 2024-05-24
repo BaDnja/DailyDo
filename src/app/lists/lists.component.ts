@@ -6,6 +6,7 @@ import {AlertService} from "../alert/alert.service";
 import {AlertTypeEnum} from "../alert/types/alertType.enum";
 import {NgForOf} from "@angular/common";
 import {TaskItemComponent} from "../tasks/task-list/task-item/task-item.component";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-lists',
@@ -13,7 +14,8 @@ import {TaskItemComponent} from "../tasks/task-list/task-item/task-item.componen
   imports: [
     NgForOf,
     ReactiveFormsModule,
-    TaskItemComponent
+    TaskItemComponent,
+    RouterLink
   ],
   templateUrl: './lists.component.html',
   styleUrl: './lists.component.css'

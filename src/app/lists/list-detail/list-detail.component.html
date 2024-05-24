@@ -1,0 +1,16 @@
+<h2>Task Details</h2>
+
+<form *ngIf="list" [formGroup]="updateListForm" (ngSubmit)="onUpdate()" >
+  <div>
+    <label for="title">Title</label>
+    <input id="title" type="text" formControlName="title">
+  </div>
+
+  <button class="btn btn-success" type="submit">Update</button>
+</form>
+
+<form *ngIf="list" (ngSubmit)="onDelete()">
+  <button id="item-delete-button" class="btn btn-danger" type="submit">Delete</button>
+</form>
+
+<app-confirmation-dialog *ngIf="showConfirmation" (confirmed)="onConfirmDeletion($event)"></app-confirmation-dialog>
