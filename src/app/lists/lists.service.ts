@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {StorageService} from "../shared/services/storage/storage.service";
 import {List} from "./list.model";
+import {TasksService} from "../tasks/tasks.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,9 @@ export class ListsService {
 
   lists$ = this.listsSubject.asObservable();
 
-  constructor(private storage: StorageService) { }
+  constructor(private storage: StorageService,
+              private tasksService: TasksService) {
+  }
 
   getNewId(lists: any[]): string {
     return String(lists.reduce((max, list) => Math.max(max, Number(list.id)), 0) + 1);
@@ -43,6 +46,12 @@ export class ListsService {
       lists.splice(listIndex, 1);
     }
     this.saveLists(lists);
+    const tasks = this.tasksService.getTasks().filter(task => task.listId === id);
+    tasks.forEach(task => {
+      task.listId = '';
+    })
+    this.tasksService.saveTasks(tasks);
+
   }
 
   deleteAllLists() {
