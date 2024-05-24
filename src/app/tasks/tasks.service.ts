@@ -13,6 +13,10 @@ export class TasksService {
   constructor(private storage: StorageService) {
   }
 
+  getNewId(tasks: any[]) {
+    return String(tasks.reduce((max, task) => Math.max(max, Number(task.id)), 0) + 1);
+  }
+
   getTasks(): Task[] {
     return this.storage.getItem(this.localStorageKey);
   }

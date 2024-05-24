@@ -56,9 +56,10 @@ export class TaskListComponent implements OnInit {
 
   appendTask() {
     if (!this.addNewTaskForm.invalid) {
+      const id = this.tasksService.getNewId(this.tasks);
       const title = this.addNewTaskForm.value.title!;
       const detail = this.addNewTaskForm.value.detail!.trim();
-      const newTask = new Task(String(this.tasks.length + 1), title, detail)
+      const newTask = new Task(id, title, detail)
       this.tasks = [...this.tasks, newTask];
       this.saveTasks();
     }
