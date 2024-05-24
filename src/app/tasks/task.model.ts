@@ -4,6 +4,7 @@ export class Task {
   public detail: string;
   public creationDatetime: string;
   public isDone: boolean = false;
+  public listId: string = '';
 
   constructor(id: string, title: string, detail: string) {
     this.id = id;

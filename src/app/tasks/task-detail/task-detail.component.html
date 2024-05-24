@@ -1,10 +1,7 @@
 <h2>Task Details</h2>
 
 <div *ngIf="task">
-  <h3>Title: {{task.title!}}</h3>
-  <h4>Details: {{task.detail}}</h4>
   <p>Created at: {{task.creationDatetime}}</p>
-  <span>{{task.isDone ? "Done" : "Not Done"}}</span>
 </div>
 
 <form *ngIf="task" [formGroup]="updateTaskForm" (ngSubmit)="onUpdate()" >
@@ -20,6 +17,11 @@
     <label for="isDone">Done</label>
     <input id="isDone" formControlName="isDone" class="form-check-input me-1" type="checkbox">
   </div>
+  <span>List:</span>
+  <select id="listId" formControlName="listId" class="form-select" aria-label="List select">
+    <option *ngFor="let list of lists" [value]="list.id">{{ list.title }}</option>
+  </select>
+
   <button class="btn btn-success" type="submit">Update</button>
 </form>
 
