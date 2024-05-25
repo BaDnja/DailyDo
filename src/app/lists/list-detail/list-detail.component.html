@@ -5,6 +5,11 @@
     <label for="title">Title</label>
     <input id="title" type="text" formControlName="title">
   </div>
+  <span>Group:</span>
+  <select id="groupId" formControlName="groupId" class="form-select" aria-label="Group select">
+    <option [value]="''">Select a group</option>
+    <option *ngFor="let group of groups" [value]="group.id">{{ group.title }}</option>
+  </select>
   <button class="btn btn-success" type="submit">Update</button>
 </form>
 
@@ -12,7 +17,7 @@
   <button id="item-delete-button" class="btn btn-danger" type="submit">Delete</button>
 </form>
 <hr>
-
+<span>Tasks in this list:</span>
 <div class="d-flex flex-column">
   <ul *ngFor="let taskElement of tasks" class="list-group">
     <li class="list-group-item">

@@ -22,8 +22,6 @@
     <option [value]="''">Select a list</option>
     <option *ngFor="let list of lists" [value]="list.id">{{ list.title }}</option>
   </select>
-
-
   <button class="btn btn-success" type="submit">Update</button>
 </form>
 

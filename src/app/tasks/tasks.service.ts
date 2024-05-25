@@ -45,7 +45,7 @@ export class TasksService {
   }
 
   deleteAllTasks() {
-    this.storage.deleteAllTasks(this.localStorageKey);
+    this.storage.deleteSpecificKeyItems(this.localStorageKey);
     this.tasksSubject.next([]);
   }
 }
