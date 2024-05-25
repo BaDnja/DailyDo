@@ -9,6 +9,8 @@ import {AlertService} from "../../alert/alert.service";
 import {AlertTypeEnum} from "../../alert/types/alertType.enum";
 import {Task} from "../../tasks/task.model";
 import {TasksService} from "../../tasks/tasks.service";
+import {Group} from "../../groups/group.model";
+import {GroupsService} from "../../groups/groups.service";
 
 @Component({
   selector: 'app-list-detail',
@@ -27,6 +29,7 @@ import {TasksService} from "../../tasks/tasks.service";
 export class ListDetailComponent implements OnInit {
   list!: List;
   tasks!: Task[];
+  groups: Group[] = [];
   updateListForm!: FormGroup;
   showConfirmation: boolean = false;
 
@@ -35,7 +38,8 @@ export class ListDetailComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router,
               private alertService: AlertService,
-              private tasksService: TasksService) {
+              private tasksService: TasksService,
+              private groupsService: GroupsService) {
   }
 
   ngOnInit() {
@@ -44,9 +48,11 @@ export class ListDetailComponent implements OnInit {
     this.list = <List>this.listService.getLists().find(list => list.id === listIdFromRoute);
 
     this.updateListForm = this.formBuilder.nonNullable.group({
-      title: [this.list.title, [Validators.required]]
+      title: [this.list.title, [Validators.required]],
+      groupId: this.list.groupId
     });
     this.tasks = this.tasksService.getTasks().filter(task => task.listId === this.list.id);
+    this.groups = this.groupsService.getGroups();
   }
 
   showAfterUpdateMessage() {
@@ -68,6 +74,7 @@ export class ListDetailComponent implements OnInit {
       const updatedList = {
         id: this.list.id,
         title: this.updateListForm.value.title,
+        groupId: this.updateListForm.value.groupId,
       }
       this.listService.updateList(updatedList);
       this.showAfterUpdateMessage();

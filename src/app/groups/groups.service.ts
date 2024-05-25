@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {StorageService} from "../shared/services/storage/storage.service";
 import {ListsService} from "../lists/lists.service";
@@ -14,7 +14,8 @@ export class GroupsService {
   groups$ = this.groupsSubject.asObservable();
 
   constructor(private storage: StorageService,
-              private listsService: ListsService) { }
+              private listsService: ListsService) {
+  }
 
   getNewId(groups: any[]): string {
     return String(groups.reduce((max, group) => Math.max(max, Number(group.id)), 0) + 1);
@@ -30,7 +31,7 @@ export class GroupsService {
   }
 
   updateGroup(updatedGroup: List) {
-    const groups: List[] = this.getGroups();
+    const groups: Group[] = this.getGroups();
     const groupIndex = groups.findIndex(group => group.id === updatedGroup.id);
     if (groupIndex !== -1) {
       groups[groupIndex] = updatedGroup;
