@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {TasksService} from "../tasks/tasks.service";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {NgIf} from "@angular/common";
+import {StorageService} from "../shared/services/storage/storage.service";
 
 @Component({
   selector: 'app-top-bar',
@@ -18,7 +18,7 @@ import {NgIf} from "@angular/common";
 export class TopBarComponent {
   showConfirmation: boolean = false;
 
-  constructor(private tasksService: TasksService) {
+  constructor(private storage: StorageService) {
   }
 
   onClearData() {
@@ -33,6 +33,6 @@ export class TopBarComponent {
   }
 
   clearData() {
-    this.tasksService.clearTasks();
+    this.storage.clearData();
   }
 }

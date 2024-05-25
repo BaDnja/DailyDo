@@ -2,11 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {TasksService} from "../tasks.service";
 import {Task} from "../task.model";
-import {NgIf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AlertTypeEnum} from "../../alert/types/alertType.enum";
 import {AlertService} from "../../alert/alert.service";
 import {ConfirmationDialogComponent} from "../../confirmation-dialog/confirmation-dialog.component";
+import {List} from "../../lists/list.model";
+import {ListsService} from "../../lists/lists.service";
 
 @Component({
   selector: 'app-task-detail',
@@ -15,7 +17,8 @@ import {ConfirmationDialogComponent} from "../../confirmation-dialog/confirmatio
     NgIf,
     ReactiveFormsModule,
     FormsModule,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    NgForOf
   ],
   templateUrl: './task-detail.component.html',
   styleUrl: './task-detail.component.css',
@@ -23,6 +26,7 @@ import {ConfirmationDialogComponent} from "../../confirmation-dialog/confirmatio
 })
 export class TaskDetailComponent implements OnInit {
   task!: Task;
+  lists: List[] = [];
   updateTaskForm!: FormGroup
   showConfirmation = false;
 
@@ -30,7 +34,8 @@ export class TaskDetailComponent implements OnInit {
               private tasksService: TasksService,
               private formBuilder: FormBuilder,
               private router: Router,
-              private alertService: AlertService) {
+              private alertService: AlertService,
+              private listsService: ListsService) {
   }
 
   ngOnInit() {
@@ -41,8 +46,11 @@ export class TaskDetailComponent implements OnInit {
     this.updateTaskForm = this.formBuilder.nonNullable.group({
       title: [this.task.title, [Validators.required]],
       detail: this.task.detail,
-      isDone: this.task.isDone
+      isDone: this.task.isDone,
+      listId: this.task.listId,
     })
+
+    this.lists = this.listsService.getLists();
   }
 
   showAfterUpdateMessage() {
@@ -66,7 +74,8 @@ export class TaskDetailComponent implements OnInit {
         title: this.updateTaskForm.value.title,
         detail: this.updateTaskForm.value.detail,
         isDone: this.updateTaskForm.value.isDone,
-        creationDatetime: this.task.creationDatetime
+        creationDatetime: this.task.creationDatetime,
+        listId: this.updateTaskForm.value.listId,
       }
       this.tasksService.updateTask(updatedTask);
       this.showAfterUpdateMessage();
