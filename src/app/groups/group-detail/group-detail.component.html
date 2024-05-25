@@ -1,1 +1,26 @@
-<p>group-detail works!</p>
+<h2>Group Details</h2>
+
+<form *ngIf="group" [formGroup]="updateGroupForm" (ngSubmit)="onUpdate()" >
+  <div>
+    <label for="title">Title</label>
+    <input id="title" type="text" formControlName="title">
+  </div>
+  <button class="btn btn-success" type="submit">Update</button>
+</form>
+
+<form *ngIf="group" (ngSubmit)="onDelete()">
+  <button id="item-delete-button" class="btn btn-danger" type="submit">Delete</button>
+</form>
+<hr>
+<span>Lists in this group:</span>
+<div class="d-flex flex-column">
+  <ul *ngFor="let listElement of lists" class="list-group">
+    <li class="list-group-item">
+      <a [routerLink]="['/lists', listElement.id]">
+        <label class="form-check-label">{{ listElement.title }}</label>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<app-confirmation-dialog *ngIf="showConfirmation" (confirmed)="onConfirmDeletion($event)"></app-confirmation-dialog>

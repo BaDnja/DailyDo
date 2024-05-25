@@ -71,7 +71,7 @@ export class ListDetailComponent implements OnInit {
 
   onUpdate() {
     if (!this.updateListForm.invalid) {
-      const updatedList = {
+      const updatedList: List = {
         id: this.list.id,
         title: this.updateListForm.value.title,
         groupId: this.updateListForm.value.groupId,
