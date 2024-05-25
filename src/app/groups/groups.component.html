@@ -1,1 +1,16 @@
-<p>groups works!</p>
+<div class="d-flex flex-column">
+  <form [formGroup]="addNewGroupForm" (ngSubmit)="onAddNew()">
+    <div>
+      <label for="title">Title</label>
+      <input id="title" type="text" formControlName="title">
+    </div>
+    <button class="btn btn-success" type="submit">Add</button>
+  </form>
+  <ul *ngFor="let groupElement of groups" class="list-group">
+    <li class="list-group-item">
+      <a [routerLink]="['/groups', groupElement.id]">
+        <label class="form-check-label">{{ groupElement.title }}</label>
+      </a>
+    </li>
+  </ul>
+</div>
