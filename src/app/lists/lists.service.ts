@@ -40,7 +40,8 @@ export class ListsService {
   }
 
   updateList(updatedList: List) {
-    this.dataService.updateItem(this.getLists(), updatedList, this.saveLists.bind(this));
+    const lists = this.dataService.updateItem(this.getLists(), updatedList);
+    this.saveLists(lists);
   }
 
   deleteList(id: string) {

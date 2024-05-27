@@ -40,7 +40,8 @@ export class GroupsService {
   }
 
   updateGroup(updatedGroup: Group) {
-    this.dataService.updateItem(this.getGroups(), updatedGroup, this.saveGroups.bind(this));
+    const groups = this.dataService.updateItem(this.getGroups(), updatedGroup);
+    this.saveGroups(groups);
   }
 
   deleteGroup(id: string) {

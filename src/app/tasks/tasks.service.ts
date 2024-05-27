@@ -35,7 +35,8 @@ export class TasksService {
   }
 
   updateTask(updatedTask: Task) {
-    this.dataService.updateItem(this.getTasks(), updatedTask, this.saveTasks.bind(this));
+    const tasks = this.dataService.updateItem(this.getTasks(), updatedTask);
+    this.saveTasks(tasks);
   }
 
   deleteTask(id: string) {

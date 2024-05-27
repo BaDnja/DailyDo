@@ -17,11 +17,11 @@ export class DataService {
     this.storage.setItem(key, JSON.stringify(items));
   }
 
-  updateItem<T extends { id: string }>(items: T[], updatedItem: T, saveItems: (items: T[]) => void): void {
+  updateItem<T extends { id: string }>(items: T[], updatedItem: T): T[] {
     const itemIndex = items.findIndex(item => item.id === updatedItem.id);
     if (itemIndex !== -1) {
       items[itemIndex] = updatedItem;
     }
-    saveItems(items);
+    return items;
   }
 }
