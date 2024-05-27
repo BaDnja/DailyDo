@@ -57,7 +57,7 @@ export class ListsService {
   }
 
   deleteAllLists() {
-    this.storage.deleteSpecificKeyItems(this.localStorageKey);
+    this.dataService.deleteAllItemsOfSpecificKey(this.localStorageKey);
     this.stateService.setState([]);
   }
 }

@@ -32,4 +32,8 @@ export class DataService {
     }
     return items;
   }
+
+  deleteAllItemsOfSpecificKey(key: string) {
+    this.storage.deleteSpecificKeyItems(key);
+  }
 }

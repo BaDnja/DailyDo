@@ -58,7 +58,7 @@ export class GroupsService {
   }
 
   deleteAllGroups(): void {
-    this.storage.deleteSpecificKeyItems(this.localStorageKey);
+    this.dataService.deleteAllItemsOfSpecificKey(this.localStorageKey);
     this.stateService.setState([]);
   }
 }
