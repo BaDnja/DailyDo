@@ -3,18 +3,27 @@ import {BehaviorSubject} from "rxjs";
 import {StorageService} from "../shared/services/storage/storage.service";
 import {List} from "./list.model";
 import {TasksService} from "../tasks/tasks.service";
+import {DataService} from "../shared/services/data/data.service";
+import {StateService} from "../shared/services/state/state.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListsService {
-  private listsSubject = new BehaviorSubject<any[]>(this.getLists());
   private readonly localStorageKey: string = 'lists';
-
-  lists$ = this.listsSubject.asObservable();
+  private stateService: StateService<List>;
 
   constructor(private storage: StorageService,
-              private tasksService: TasksService) {
+              private tasksService: TasksService,
+              private dataService: DataService,
+              stateService: StateService<List>) {
+    this.stateService = stateService;
+    const initialLists = this.getLists();
+    this.stateService.initializeState(initialLists);
+  }
+
+  get lists$() {
+    return this.stateService.state$;
   }
 
   getNewId(lists: any[]): string {
@@ -22,40 +31,33 @@ export class ListsService {
   }
 
   getLists(): List[] {
-    return this.storage.getItem(this.localStorageKey);
+    return this.dataService.getItems(this.localStorageKey);
   }
 
-  saveLists(lists: any[]): void {
-    this.storage.setItem(this.localStorageKey, JSON.stringify(lists));
-    this.listsSubject.next(lists);
+  saveLists(lists: List[]): void {
+    this.dataService.saveItems(this.localStorageKey, lists);
+    this.stateService.setState(lists);
   }
 
   updateList(updatedList: List) {
-    const lists: List[] = this.getLists();
-    const listIndex = lists.findIndex(list => list.id === updatedList.id);
-    if (listIndex !== -1) {
-      lists[listIndex] = updatedList;
-    }
+    const lists = this.dataService.updateItem(this.getLists(), updatedList);
     this.saveLists(lists);
   }
 
   deleteList(id: string) {
-    const lists = this.getLists();
-    const listIndex = lists.findIndex(list => list.id === id);
-    if (listIndex !== -1) {
-      lists.splice(listIndex, 1);
-    }
-    this.saveLists(lists);
+    const currentLists = this.getLists();
+    const newLists = this.dataService.deleteItem(currentLists, id);
+    this.saveLists(newLists);
+    // Set listId to empty string on every task associated with deleted list
     const tasks = this.tasksService.getTasks();
     tasks.forEach(task => {
       task.listId === id ? task.listId = '' : task.listId
     })
     this.tasksService.saveTasks(tasks);
-
   }
 
   deleteAllLists() {
-    this.storage.deleteSpecificKeyItems(this.localStorageKey);
-    this.listsSubject.next([]);
+    this.dataService.deleteAllItemsOfSpecificKey(this.localStorageKey);
+    this.stateService.setState([]);
   }
 }

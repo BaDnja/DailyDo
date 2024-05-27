@@ -3,17 +3,27 @@ import {BehaviorSubject} from "rxjs";
 import {StorageService} from "../shared/services/storage/storage.service";
 import {ListsService} from "../lists/lists.service";
 import {Group} from "./group.model";
+import {DataService} from "../shared/services/data/data.service";
+import {StateService} from "../shared/services/state/state.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupsService {
-  private groupsSubject = new BehaviorSubject<any[]>(this.getGroups());
   private readonly localStorageKey: string = 'groups';
-  groups$ = this.groupsSubject.asObservable();
+  private stateService: StateService<Group>;
 
   constructor(private storage: StorageService,
-              private listsService: ListsService) {
+              private listsService: ListsService,
+              private dataService: DataService,
+              stateService: StateService<Group>) {
+    this.stateService = stateService;
+    const initialGroups = this.getGroups();
+    this.stateService.initializeState(initialGroups);
+  }
+
+  get groups$() {
+    return this.stateService.state$;
   }
 
   getNewId(groups: any[]): string {
@@ -21,30 +31,24 @@ export class GroupsService {
   }
 
   getGroups(): Group[] {
-    return this.storage.getItem(this.localStorageKey);
+    return this.dataService.getItems(this.localStorageKey);
   }
 
   saveGroups(groups: Group[]): void {
-    this.storage.setItem(this.localStorageKey, JSON.stringify(groups));
-    this.groupsSubject.next(groups);
+    this.dataService.saveItems(this.localStorageKey, groups);
+    this.stateService.setState(groups);
   }
 
   updateGroup(updatedGroup: Group) {
-    const groups: Group[] = this.getGroups();
-    const groupIndex = groups.findIndex(group => group.id === updatedGroup.id);
-    if (groupIndex !== -1) {
-      groups[groupIndex] = updatedGroup;
-    }
+    const groups = this.dataService.updateItem(this.getGroups(), updatedGroup);
     this.saveGroups(groups);
   }
 
   deleteGroup(id: string) {
-    const groups = this.getGroups();
-    const groupIndex = groups.findIndex(group => group.id === id);
-    if (groupIndex !== -1) {
-      groups.splice(groupIndex, 1);
-    }
-    this.saveGroups(groups);
+    const currentGroups = this.getGroups();
+    const newGroups = this.dataService.deleteItem(currentGroups, id);
+    this.saveGroups(newGroups);
+    // Set groupId to empty string on every list associated with deleted group
     const lists = this.listsService.getLists();
     lists.forEach(list => {
       list.groupId === id ? list.groupId = '' : list.groupId
@@ -54,7 +58,7 @@ export class GroupsService {
   }
 
   deleteAllGroups(): void {
-    this.storage.deleteSpecificKeyItems(this.localStorageKey);
-    this.groupsSubject.next([]);
+    this.dataService.deleteAllItemsOfSpecificKey(this.localStorageKey);
+    this.stateService.setState([]);
   }
 }

@@ -1,16 +1,24 @@
 import {Task} from "./task.model";
 import {Injectable} from "@angular/core";
 import {StorageService} from "../shared/services/storage/storage.service";
-import {BehaviorSubject} from "rxjs";
+import {DataService} from "../shared/services/data/data.service";
+import {StateService} from "../shared/services/state/state.service";
 
 @Injectable({providedIn: "root"})
 export class TasksService {
-  private tasksSubject = new BehaviorSubject<any[]>(this.getTasks());
   private readonly localStorageKey: string = 'tasks';
+  private stateService: StateService<Task>;
 
-  tasks$ = this.tasksSubject.asObservable();
+  constructor(private storage: StorageService,
+              private dataService: DataService,
+              stateService: StateService<Task>) {
+    this.stateService = stateService;
+    const initialTasks = this.getTasks();
+    this.stateService.initializeState(initialTasks);
+  }
 
-  constructor(private storage: StorageService) {
+  get tasks$() {
+    return this.stateService.state$;
   }
 
   getNewId(tasks: any[]) {
@@ -18,34 +26,27 @@ export class TasksService {
   }
 
   getTasks(): Task[] {
-    return this.storage.getItem(this.localStorageKey);
+    return this.dataService.getItems(this.localStorageKey);
   }
 
-  saveTasks(tasks: any[]): void {
-    this.storage.setItem(this.localStorageKey, JSON.stringify(tasks));
-    this.tasksSubject.next(tasks);
+  saveTasks(tasks: Task[]): void {
+    this.dataService.saveItems(this.localStorageKey, tasks);
+    this.stateService.setState(tasks);
   }
 
   updateTask(updatedTask: Task) {
-    const tasks = this.getTasks();
-    const taskIndex = tasks.findIndex(task => task.id === updatedTask.id);
-    if (taskIndex !== -1) {
-      tasks[taskIndex] = updatedTask;
-    }
+    const tasks = this.dataService.updateItem(this.getTasks(), updatedTask);
     this.saveTasks(tasks);
   }
 
   deleteTask(id: string) {
-    const tasks = this.getTasks();
-    const taskIndex = tasks.findIndex(task => task.id === id);
-    if (taskIndex !== -1) {
-      tasks.splice(taskIndex, 1)
-    }
-    this.saveTasks(tasks);
+    const currentTasks = this.getTasks();
+    const newTasks = this.dataService.deleteItem(currentTasks, id);
+    this.saveTasks(newTasks);
   }
 
   deleteAllTasks() {
-    this.storage.deleteSpecificKeyItems(this.localStorageKey);
-    this.tasksSubject.next([]);
+    this.dataService.deleteAllItemsOfSpecificKey(this.localStorageKey);
+    this.stateService.setState([]);
   }
 }
