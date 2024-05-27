@@ -1,8 +1,12 @@
 import {Component} from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {ConfirmationDialogComponent} from "../shared/components/confirmation-dialog/confirmation-dialog.component";
 import {NgIf} from "@angular/common";
-import {StorageService} from "../shared/services/storage/storage.service";
+import {LocalStorageKeysEnum} from "../shared/types/localStorageDataTypes.enum";
+import {DataService} from "../shared/services/data/data.service";
+import {TasksService} from "../tasks/tasks.service";
+import {ListsService} from "../lists/lists.service";
+import {GroupsService} from "../groups/groups.service";
 
 @Component({
   selector: 'app-top-bar',
@@ -17,22 +21,50 @@ import {StorageService} from "../shared/services/storage/storage.service";
 })
 export class TopBarComponent {
   showConfirmation: boolean = false;
+  dataTypeToDelete!: LocalStorageKeysEnum;
 
-  constructor(private storage: StorageService) {
+  constructor(private tasksService: TasksService,
+              private listsService: ListsService,
+              private groupsService: GroupsService,
+              private dataService: DataService,
+              private router: Router) {
   }
 
-  onClearData() {
+  onClearData(dataType: LocalStorageKeysEnum) {
+    this.dataTypeToDelete = dataType;
     this.showConfirmation = true;
   }
+
 
   onConfirmDeletion(confirm: boolean) {
     this.showConfirmation = false
     if (confirm) {
-      this.clearData();
+      this.clearData(this.dataTypeToDelete);
     }
   }
 
-  clearData() {
-    this.storage.clearData();
+  clearData(dataType: LocalStorageKeysEnum) {
+    switch (dataType) {
+      case LocalStorageKeysEnum.tasks:
+        this.tasksService.deleteAllTasks();
+        this.router.navigate(['/']);
+        break;
+      case LocalStorageKeysEnum.lists:
+        this.listsService.deleteAllLists();
+        this.tasksService.removeAllTasksFromAllLists();
+        this.router.navigate(['/lists']);
+        break;
+      case LocalStorageKeysEnum.groups:
+        this.groupsService.deleteAllGroups();
+        this.listsService.removeAllListsFromAllGroups();
+        this.router.navigate(['/groups']);
+        break;
+      case LocalStorageKeysEnum.all:
+        this.dataService.deleteAllItems();
+        this.router.navigate(['/']);
+        break;
+    }
   }
+
+  protected readonly LocalStorageKeysEnum = LocalStorageKeysEnum;
 }

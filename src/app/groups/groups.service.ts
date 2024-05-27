@@ -3,12 +3,13 @@ import {ListsService} from "../lists/lists.service";
 import {Group} from "./group.model";
 import {DataService} from "../shared/services/data/data.service";
 import {StateService} from "../shared/services/state/state.service";
+import {LocalStorageKeysEnum} from "../shared/types/localStorageDataTypes.enum";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupsService {
-  private readonly localStorageKey: string = 'groups';
+  private readonly localStorageKey: string = LocalStorageKeysEnum.groups;
   private stateService: StateService<Group>;
 
   constructor(

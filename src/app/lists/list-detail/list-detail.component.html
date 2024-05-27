@@ -1,6 +1,6 @@
 <h2>List Details</h2>
 
-<form *ngIf="list" [formGroup]="updateListForm" (ngSubmit)="onUpdate()" >
+<form *ngIf="list" [formGroup]="updateListForm" (ngSubmit)="onUpdate()">
   <div>
     <label for="title">Title</label>
     <input id="title" type="text" formControlName="title">

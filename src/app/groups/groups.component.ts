@@ -5,7 +5,6 @@ import {Group} from "./group.model";
 import {GroupsService} from "./groups.service";
 import {AlertService} from "../shared/components/alert/alert.service";
 import {AlertTypeEnum} from "../shared/components/alert/types/alertType.enum";
-import {List} from "../lists/list.model";
 import {RouterLink} from "@angular/router";
 
 @Component({

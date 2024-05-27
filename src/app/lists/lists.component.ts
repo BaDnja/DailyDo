@@ -29,7 +29,8 @@ export class ListsComponent implements OnInit {
 
   constructor(private listsService: ListsService,
               private formBuilder: FormBuilder,
-              private alertService: AlertService) {}
+              private alertService: AlertService) {
+  }
 
   ngOnInit() {
     this.listsService.lists$.subscribe(lists => {

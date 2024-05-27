@@ -17,7 +17,9 @@ import {AlertService} from "./alert.service";
 export class AlertComponent implements OnInit {
   alert?: AlertInterface;
   timeoutId?: number;
-  constructor(private alertService: AlertService) {}
+
+  constructor(private alertService: AlertService) {
+  }
 
   ngOnInit() {
     this.alertService.getAlert().subscribe((alert) => {

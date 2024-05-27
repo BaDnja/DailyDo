@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AlertComponent } from './alert.component';
+import {AlertComponent} from './alert.component';
 
 describe('AlertComponent', () => {
   let component: AlertComponent;
@@ -10,8 +10,8 @@ describe('AlertComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AlertComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(AlertComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

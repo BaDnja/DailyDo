@@ -4,15 +4,25 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a routerLink="/" class="nav-link">DailyDo</a>
+        </li>
         <li class="nav-item">
           <a routerLink="/lists" class="nav-link">Lists</a>
         </li>
         <li class="nav-item">
           <a routerLink="/groups" class="nav-link">Groups</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="onClearData()">Clear Data</a>
-        </li>
+        <div class="dropdown">
+          <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+            Delete data
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" (click)="onClearData(LocalStorageKeysEnum.tasks)">Tasks</a></li>
+            <li><a class="dropdown-item" (click)="onClearData(LocalStorageKeysEnum.lists)">Lists</a></li>
+            <li><a class="dropdown-item" (click)="onClearData(LocalStorageKeysEnum.groups)">Groups</a></li>
+            <li><a class="dropdown-item" (click)="onClearData(LocalStorageKeysEnum.all)">All data</a></li>
+          </ul>
+        </div>
       </ul>
     </div>
   </div>
