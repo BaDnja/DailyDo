@@ -3,6 +3,7 @@ import {BehaviorSubject} from "rxjs";
 import {StorageService} from "../shared/services/storage/storage.service";
 import {ListsService} from "../lists/lists.service";
 import {Group} from "./group.model";
+import {DataService} from "../data.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class GroupsService {
   groups$ = this.groupsSubject.asObservable();
 
   constructor(private storage: StorageService,
-              private listsService: ListsService) {
+              private listsService: ListsService,
+              private dataService: DataService) {
   }
 
   getNewId(groups: any[]): string {
@@ -30,12 +32,7 @@ export class GroupsService {
   }
 
   updateGroup(updatedGroup: Group) {
-    const groups: Group[] = this.getGroups();
-    const groupIndex = groups.findIndex(group => group.id === updatedGroup.id);
-    if (groupIndex !== -1) {
-      groups[groupIndex] = updatedGroup;
-    }
-    this.saveGroups(groups);
+    this.dataService.updateItem(this.getGroups(), updatedGroup, this.saveGroups.bind(this));
   }
 
   deleteGroup(id: string) {

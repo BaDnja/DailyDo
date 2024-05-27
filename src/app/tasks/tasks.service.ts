@@ -2,6 +2,7 @@ import {Task} from "./task.model";
 import {Injectable} from "@angular/core";
 import {StorageService} from "../shared/services/storage/storage.service";
 import {BehaviorSubject} from "rxjs";
+import {DataService} from "../data.service";
 
 @Injectable({providedIn: "root"})
 export class TasksService {
@@ -10,7 +11,8 @@ export class TasksService {
 
   tasks$ = this.tasksSubject.asObservable();
 
-  constructor(private storage: StorageService) {
+  constructor(private storage: StorageService,
+              private dataService: DataService) {
   }
 
   getNewId(tasks: any[]) {
@@ -27,12 +29,7 @@ export class TasksService {
   }
 
   updateTask(updatedTask: Task) {
-    const tasks = this.getTasks();
-    const taskIndex = tasks.findIndex(task => task.id === updatedTask.id);
-    if (taskIndex !== -1) {
-      tasks[taskIndex] = updatedTask;
-    }
-    this.saveTasks(tasks);
+    this.dataService.updateItem(this.getTasks(), updatedTask, this.saveTasks.bind(this));
   }
 
   deleteTask(id: string) {

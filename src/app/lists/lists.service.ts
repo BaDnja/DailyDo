@@ -3,6 +3,7 @@ import {BehaviorSubject} from "rxjs";
 import {StorageService} from "../shared/services/storage/storage.service";
 import {List} from "./list.model";
 import {TasksService} from "../tasks/tasks.service";
+import {DataService} from "../data.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class ListsService {
   lists$ = this.listsSubject.asObservable();
 
   constructor(private storage: StorageService,
-              private tasksService: TasksService) {
+              private tasksService: TasksService,
+              private dataService: DataService) {
   }
 
   getNewId(lists: any[]): string {
@@ -31,12 +33,7 @@ export class ListsService {
   }
 
   updateList(updatedList: List) {
-    const lists: List[] = this.getLists();
-    const listIndex = lists.findIndex(list => list.id === updatedList.id);
-    if (listIndex !== -1) {
-      lists[listIndex] = updatedList;
-    }
-    this.saveLists(lists);
+    this.dataService.updateItem(this.getLists(), updatedList, this.saveLists.bind(this));
   }
 
   deleteList(id: string) {
