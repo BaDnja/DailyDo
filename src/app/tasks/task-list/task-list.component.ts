@@ -4,8 +4,8 @@ import {TaskItemComponent} from "./task-item/task-item.component";
 import {NgForOf} from "@angular/common";
 import {TasksService} from "../tasks.service";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
-import {AlertTypeEnum} from "../../alert/types/alertType.enum";
-import {AlertService} from "../../alert/alert.service";
+import {AlertTypeEnum} from "../../shared/components/alert/types/alertType.enum";
+import {AlertService} from "../../shared/components/alert/alert.service";
 
 @Component({
   selector: 'app-task-list',

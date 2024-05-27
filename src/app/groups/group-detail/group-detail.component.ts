@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ConfirmationDialogComponent} from "../../confirmation-dialog/confirmation-dialog.component";
+import {ConfirmationDialogComponent} from "../../shared/components/confirmation-dialog/confirmation-dialog.component";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {Group} from "../group.model";
-import {AlertService} from "../../alert/alert.service";
+import {AlertService} from "../../shared/components/alert/alert.service";
 import {GroupsService} from "../groups.service";
-import {AlertTypeEnum} from "../../alert/types/alertType.enum";
+import {AlertTypeEnum} from "../../shared/components/alert/types/alertType.enum";
 import {List} from "../../lists/list.model";
 import {ListsService} from "../../lists/lists.service";
 

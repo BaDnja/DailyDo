@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import {ConfirmationDialogComponent} from "../shared/components/confirmation-dialog/confirmation-dialog.component";
 import {NgIf} from "@angular/common";
 import {StorageService} from "../shared/services/storage/storage.service";
 
