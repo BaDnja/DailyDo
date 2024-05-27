@@ -1,6 +1,4 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
-import {StorageService} from "../shared/services/storage/storage.service";
 import {List} from "./list.model";
 import {TasksService} from "../tasks/tasks.service";
 import {DataService} from "../shared/services/data/data.service";
@@ -13,10 +11,10 @@ export class ListsService {
   private readonly localStorageKey: string = 'lists';
   private stateService: StateService<List>;
 
-  constructor(private storage: StorageService,
-              private tasksService: TasksService,
-              private dataService: DataService,
-              stateService: StateService<List>) {
+  constructor(
+    private tasksService: TasksService,
+    private dataService: DataService,
+    stateService: StateService<List>) {
     this.stateService = stateService;
     const initialLists = this.getLists();
     this.stateService.initializeState(initialLists);

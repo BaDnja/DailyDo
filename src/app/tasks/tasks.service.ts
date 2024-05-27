@@ -1,6 +1,5 @@
 import {Task} from "./task.model";
 import {Injectable} from "@angular/core";
-import {StorageService} from "../shared/services/storage/storage.service";
 import {DataService} from "../shared/services/data/data.service";
 import {StateService} from "../shared/services/state/state.service";
 
@@ -9,9 +8,9 @@ export class TasksService {
   private readonly localStorageKey: string = 'tasks';
   private stateService: StateService<Task>;
 
-  constructor(private storage: StorageService,
-              private dataService: DataService,
-              stateService: StateService<Task>) {
+  constructor(
+    private dataService: DataService,
+    stateService: StateService<Task>) {
     this.stateService = stateService;
     const initialTasks = this.getTasks();
     this.stateService.initializeState(initialTasks);
