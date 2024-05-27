@@ -45,12 +45,10 @@ export class GroupsService {
   }
 
   deleteGroup(id: string) {
-    const groups = this.getGroups();
-    const groupIndex = groups.findIndex(group => group.id === id);
-    if (groupIndex !== -1) {
-      groups.splice(groupIndex, 1);
-    }
-    this.saveGroups(groups);
+    const currentGroups = this.getGroups();
+    const newGroups = this.dataService.deleteItem(currentGroups, id);
+    this.saveGroups(newGroups);
+    // Set groupId to empty string on every list associated with deleted group
     const lists = this.listsService.getLists();
     lists.forEach(list => {
       list.groupId === id ? list.groupId = '' : list.groupId

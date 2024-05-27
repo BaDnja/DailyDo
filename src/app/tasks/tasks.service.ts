@@ -40,12 +40,9 @@ export class TasksService {
   }
 
   deleteTask(id: string) {
-    const tasks = this.getTasks();
-    const taskIndex = tasks.findIndex(task => task.id === id);
-    if (taskIndex !== -1) {
-      tasks.splice(taskIndex, 1)
-    }
-    this.saveTasks(tasks);
+    const currentTasks = this.getTasks();
+    const newTasks = this.dataService.deleteItem(currentTasks, id);
+    this.saveTasks(newTasks);
   }
 
   deleteAllTasks() {

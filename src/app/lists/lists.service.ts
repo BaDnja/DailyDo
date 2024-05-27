@@ -45,18 +45,15 @@ export class ListsService {
   }
 
   deleteList(id: string) {
-    const lists = this.getLists();
-    const listIndex = lists.findIndex(list => list.id === id);
-    if (listIndex !== -1) {
-      lists.splice(listIndex, 1);
-    }
-    this.saveLists(lists);
+    const currentLists = this.getLists();
+    const newLists = this.dataService.deleteItem(currentLists, id);
+    this.saveLists(newLists);
+    // Set listId to empty string on every task associated with deleted list
     const tasks = this.tasksService.getTasks();
     tasks.forEach(task => {
       task.listId === id ? task.listId = '' : task.listId
     })
     this.tasksService.saveTasks(tasks);
-
   }
 
   deleteAllLists() {
