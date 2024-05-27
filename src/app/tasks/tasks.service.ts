@@ -1,18 +1,24 @@
 import {Task} from "./task.model";
 import {Injectable} from "@angular/core";
 import {StorageService} from "../shared/services/storage/storage.service";
-import {BehaviorSubject} from "rxjs";
-import {DataService} from "../data.service";
+import {DataService} from "../shared/services/data/data.service";
+import {StateService} from "../shared/services/state/state.service";
 
 @Injectable({providedIn: "root"})
 export class TasksService {
-  private tasksSubject = new BehaviorSubject<any[]>(this.getTasks());
   private readonly localStorageKey: string = 'tasks';
-
-  tasks$ = this.tasksSubject.asObservable();
+  private stateService: StateService<Task>;
 
   constructor(private storage: StorageService,
-              private dataService: DataService) {
+              private dataService: DataService,
+              stateService: StateService<Task>) {
+    this.stateService = stateService;
+    const initialTasks = this.getTasks();
+    this.stateService.initializeState(initialTasks);
+  }
+
+  get tasks$() {
+    return this.stateService.state$;
   }
 
   getNewId(tasks: any[]) {
@@ -23,9 +29,9 @@ export class TasksService {
     return this.dataService.getItems(this.localStorageKey);
   }
 
-  saveTasks(tasks: any[]): void {
-    this.storage.setItem(this.localStorageKey, JSON.stringify(tasks));
-    this.tasksSubject.next(tasks);
+  saveTasks(tasks: Task[]): void {
+    this.dataService.saveItems(this.localStorageKey, tasks);
+    this.stateService.setState(tasks);
   }
 
   updateTask(updatedTask: Task) {
@@ -43,6 +49,6 @@ export class TasksService {
 
   deleteAllTasks() {
     this.storage.deleteSpecificKeyItems(this.localStorageKey);
-    this.tasksSubject.next([]);
+    this.stateService.setState([]);
   }
 }

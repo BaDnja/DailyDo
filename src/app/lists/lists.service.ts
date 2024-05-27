@@ -3,20 +3,27 @@ import {BehaviorSubject} from "rxjs";
 import {StorageService} from "../shared/services/storage/storage.service";
 import {List} from "./list.model";
 import {TasksService} from "../tasks/tasks.service";
-import {DataService} from "../data.service";
+import {DataService} from "../shared/services/data/data.service";
+import {StateService} from "../shared/services/state/state.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListsService {
-  private listsSubject = new BehaviorSubject<any[]>(this.getLists());
   private readonly localStorageKey: string = 'lists';
-
-  lists$ = this.listsSubject.asObservable();
+  private stateService: StateService<List>;
 
   constructor(private storage: StorageService,
               private tasksService: TasksService,
-              private dataService: DataService) {
+              private dataService: DataService,
+              stateService: StateService<List>) {
+    this.stateService = stateService;
+    const initialLists = this.getLists();
+    this.stateService.initializeState(initialLists);
+  }
+
+  get lists$() {
+    return this.stateService.state$;
   }
 
   getNewId(lists: any[]): string {
@@ -27,9 +34,9 @@ export class ListsService {
     return this.dataService.getItems(this.localStorageKey);
   }
 
-  saveLists(lists: any[]): void {
-    this.storage.setItem(this.localStorageKey, JSON.stringify(lists));
-    this.listsSubject.next(lists);
+  saveLists(lists: List[]): void {
+    this.dataService.saveItems(this.localStorageKey, lists);
+    this.stateService.setState(lists);
   }
 
   updateList(updatedList: List) {
@@ -53,6 +60,6 @@ export class ListsService {
 
   deleteAllLists() {
     this.storage.deleteSpecificKeyItems(this.localStorageKey);
-    this.listsSubject.next([]);
+    this.stateService.setState([]);
   }
 }

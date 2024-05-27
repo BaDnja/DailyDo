@@ -3,19 +3,27 @@ import {BehaviorSubject} from "rxjs";
 import {StorageService} from "../shared/services/storage/storage.service";
 import {ListsService} from "../lists/lists.service";
 import {Group} from "./group.model";
-import {DataService} from "../data.service";
+import {DataService} from "../shared/services/data/data.service";
+import {StateService} from "../shared/services/state/state.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupsService {
-  private groupsSubject = new BehaviorSubject<any[]>(this.getGroups());
   private readonly localStorageKey: string = 'groups';
-  groups$ = this.groupsSubject.asObservable();
+  private stateService: StateService<Group>;
 
   constructor(private storage: StorageService,
               private listsService: ListsService,
-              private dataService: DataService) {
+              private dataService: DataService,
+              stateService: StateService<Group>) {
+    this.stateService = stateService;
+    const initialGroups = this.getGroups();
+    this.stateService.initializeState(initialGroups);
+  }
+
+  get groups$() {
+    return this.stateService.state$;
   }
 
   getNewId(groups: any[]): string {
@@ -27,8 +35,8 @@ export class GroupsService {
   }
 
   saveGroups(groups: Group[]): void {
-    this.storage.setItem(this.localStorageKey, JSON.stringify(groups));
-    this.groupsSubject.next(groups);
+    this.dataService.saveItems(this.localStorageKey, groups);
+    this.stateService.setState(groups);
   }
 
   updateGroup(updatedGroup: Group) {
@@ -52,6 +60,6 @@ export class GroupsService {
 
   deleteAllGroups(): void {
     this.storage.deleteSpecificKeyItems(this.localStorageKey);
-    this.groupsSubject.next([]);
+    this.stateService.setState([]);
   }
 }
