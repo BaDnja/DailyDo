@@ -1,17 +1,17 @@
 import {Task} from "./task.model";
 import {Injectable} from "@angular/core";
-import {StorageService} from "../shared/services/storage/storage.service";
 import {DataService} from "../shared/services/data/data.service";
 import {StateService} from "../shared/services/state/state.service";
+import {LocalStorageKeysEnum} from "../shared/types/localStorageDataTypes.enum";
 
 @Injectable({providedIn: "root"})
 export class TasksService {
-  private readonly localStorageKey: string = 'tasks';
+  private readonly localStorageKey: string = LocalStorageKeysEnum.tasks;
   private stateService: StateService<Task>;
 
-  constructor(private storage: StorageService,
-              private dataService: DataService,
-              stateService: StateService<Task>) {
+  constructor(
+    private dataService: DataService,
+    stateService: StateService<Task>) {
     this.stateService = stateService;
     const initialTasks = this.getTasks();
     this.stateService.initializeState(initialTasks);
@@ -43,6 +43,14 @@ export class TasksService {
     const currentTasks = this.getTasks();
     const newTasks = this.dataService.deleteItem(currentTasks, id);
     this.saveTasks(newTasks);
+  }
+
+  removeAllTasksFromAllLists() {
+    const tasks = this.getTasks();
+    tasks.forEach(task => {
+      task.listId = "";
+    })
+    this.saveTasks(tasks);
   }
 
   deleteAllTasks() {

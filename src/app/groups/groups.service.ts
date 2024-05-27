@@ -1,22 +1,21 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
-import {StorageService} from "../shared/services/storage/storage.service";
 import {ListsService} from "../lists/lists.service";
 import {Group} from "./group.model";
 import {DataService} from "../shared/services/data/data.service";
 import {StateService} from "../shared/services/state/state.service";
+import {LocalStorageKeysEnum} from "../shared/types/localStorageDataTypes.enum";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupsService {
-  private readonly localStorageKey: string = 'groups';
+  private readonly localStorageKey: string = LocalStorageKeysEnum.groups;
   private stateService: StateService<Group>;
 
-  constructor(private storage: StorageService,
-              private listsService: ListsService,
-              private dataService: DataService,
-              stateService: StateService<Group>) {
+  constructor(
+    private listsService: ListsService,
+    private dataService: DataService,
+    stateService: StateService<Group>) {
     this.stateService = stateService;
     const initialGroups = this.getGroups();
     this.stateService.initializeState(initialGroups);

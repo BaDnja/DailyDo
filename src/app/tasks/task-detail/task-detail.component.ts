@@ -4,9 +4,9 @@ import {TasksService} from "../tasks.service";
 import {Task} from "../task.model";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {AlertTypeEnum} from "../../alert/types/alertType.enum";
-import {AlertService} from "../../alert/alert.service";
-import {ConfirmationDialogComponent} from "../../confirmation-dialog/confirmation-dialog.component";
+import {AlertTypeEnum} from "../../shared/components/alert/types/alertType.enum";
+import {AlertService} from "../../shared/components/alert/alert.service";
+import {ConfirmationDialogComponent} from "../../shared/components/confirmation-dialog/confirmation-dialog.component";
 import {List} from "../../lists/list.model";
 import {ListsService} from "../../lists/lists.service";
 

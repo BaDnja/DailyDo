@@ -25,7 +25,7 @@ export class DataService {
     return items;
   }
 
-  deleteItem<T extends {id: string}>(items: T[], id: string): T[] {
+  deleteItem<T extends { id: string }>(items: T[], id: string): T[] {
     const taskIndex = items.findIndex(item => item.id === id);
     if (taskIndex !== -1) {
       items.splice(taskIndex, 1)
@@ -35,5 +35,9 @@ export class DataService {
 
   deleteAllItemsOfSpecificKey(key: string) {
     this.storage.deleteSpecificKeyItems(key);
+  }
+
+  deleteAllItems() {
+    this.storage.clearData();
   }
 }

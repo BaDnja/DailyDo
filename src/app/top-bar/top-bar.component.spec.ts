@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TopBarComponent } from './top-bar.component';
+import {TopBarComponent} from './top-bar.component';
 
 describe('TopBarComponent', () => {
   let component: TopBarComponent;
@@ -10,8 +10,8 @@ describe('TopBarComponent', () => {
     await TestBed.configureTestingModule({
       imports: [TopBarComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(TopBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

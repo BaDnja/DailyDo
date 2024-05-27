@@ -1,6 +1,6 @@
 <h2>Group Details</h2>
 
-<form *ngIf="group" [formGroup]="updateGroupForm" (ngSubmit)="onUpdate()" >
+<form *ngIf="group" [formGroup]="updateGroupForm" (ngSubmit)="onUpdate()">
   <div>
     <label for="title">Title</label>
     <input id="title" type="text" formControlName="title">

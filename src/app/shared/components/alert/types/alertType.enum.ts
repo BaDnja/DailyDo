@@ -1,4 +1,3 @@
-
 export enum AlertTypeEnum {
   success = 'success',
   info = 'info',

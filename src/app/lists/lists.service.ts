@@ -1,22 +1,21 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
-import {StorageService} from "../shared/services/storage/storage.service";
 import {List} from "./list.model";
 import {TasksService} from "../tasks/tasks.service";
 import {DataService} from "../shared/services/data/data.service";
 import {StateService} from "../shared/services/state/state.service";
+import {LocalStorageKeysEnum} from "../shared/types/localStorageDataTypes.enum";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListsService {
-  private readonly localStorageKey: string = 'lists';
+  private readonly localStorageKey: string = LocalStorageKeysEnum.lists;
   private stateService: StateService<List>;
 
-  constructor(private storage: StorageService,
-              private tasksService: TasksService,
-              private dataService: DataService,
-              stateService: StateService<List>) {
+  constructor(
+    private tasksService: TasksService,
+    private dataService: DataService,
+    stateService: StateService<List>) {
     this.stateService = stateService;
     const initialLists = this.getLists();
     this.stateService.initializeState(initialLists);
@@ -54,6 +53,14 @@ export class ListsService {
       task.listId === id ? task.listId = '' : task.listId
     })
     this.tasksService.saveTasks(tasks);
+  }
+
+  removeAllListsFromAllGroups() {
+    const lists = this.getLists();
+    lists.forEach(list => {
+      list.groupId = "";
+    })
+    this.saveLists(lists);
   }
 
   deleteAllLists() {

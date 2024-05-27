@@ -4,7 +4,7 @@
   <p>Created at: {{task.creationDatetime}}</p>
 </div>
 
-<form *ngIf="task" [formGroup]="updateTaskForm" (ngSubmit)="onUpdate()" >
+<form *ngIf="task" [formGroup]="updateTaskForm" (ngSubmit)="onUpdate()">
   <div>
     <label for="title">Title</label>
     <input id="title" type="text" formControlName="title">

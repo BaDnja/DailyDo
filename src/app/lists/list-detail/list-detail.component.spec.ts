@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ListDetailComponent } from './list-detail.component';
+import {ListDetailComponent} from './list-detail.component';
 
 describe('ListDetailComponent', () => {
   let component: ListDetailComponent;
@@ -10,8 +10,8 @@ describe('ListDetailComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ListDetailComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(ListDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
