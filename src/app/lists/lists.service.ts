@@ -24,7 +24,7 @@ export class ListsService {
   }
 
   getLists(): List[] {
-    return this.storage.getItem(this.localStorageKey);
+    return this.dataService.getItems(this.localStorageKey);
   }
 
   saveLists(lists: any[]): void {

@@ -23,7 +23,7 @@ export class GroupsService {
   }
 
   getGroups(): Group[] {
-    return this.storage.getItem(this.localStorageKey);
+    return this.dataService.getItems(this.localStorageKey);
   }
 
   saveGroups(groups: Group[]): void {

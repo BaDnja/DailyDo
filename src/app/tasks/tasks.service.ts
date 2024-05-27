@@ -20,7 +20,7 @@ export class TasksService {
   }
 
   getTasks(): Task[] {
-    return this.storage.getItem(this.localStorageKey);
+    return this.dataService.getItems(this.localStorageKey);
   }
 
   saveTasks(tasks: any[]): void {
