@@ -25,6 +25,10 @@ Spotted a bug? :bug: Feel free to open an issue!
 3. After successful build, run `docker run -d -p 8080:80 daily-do`
 4. Go to http://localhost:8080
 
+### Data models
+
+All models can be found in [src/app/shared/models](src/app/shared/models)
+
 ## List of features
 
 * Tasks, lists and groups CRUD
@@ -35,7 +39,8 @@ Spotted a bug? :bug: Feel free to open an issue!
   * Delete item
 * Add task to a list
 * Add list to a group
-
-### Data models
-
-All models can be found in [src/app/shared/models](src/app/shared/models)
+* Remove data from local storage
+  * Choose between tasks, lists, groups or all data
+  * Removing tasks will remove all tasks from local storage
+  * Removing lists will remove all lists, and set listId to empty string for every task associated with the deleted list
+  * Removing groups will remove all groups, and set groupId to empty string for every list associated with the deleted group
