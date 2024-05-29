@@ -1,4 +1,4 @@
-import {Task} from "./task.model";
+import {Task} from "../shared/models/task.model";
 import {Injectable} from "@angular/core";
 import {DataService} from "../shared/services/data/data.service";
 import {StateService} from "../shared/services/state/state.service";

@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {TasksService} from "../tasks.service";
-import {Task} from "../task.model";
+import {Task} from "../../shared/models/task.model";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AlertTypeEnum} from "../../shared/components/alert/types/alertType.enum";
 import {AlertService} from "../../shared/components/alert/alert.service";
 import {ConfirmationDialogComponent} from "../../shared/components/confirmation-dialog/confirmation-dialog.component";
-import {List} from "../../lists/list.model";
+import {List} from "../../shared/models/list.model";
 import {ListsService} from "../../lists/lists.service";
 
 @Component({

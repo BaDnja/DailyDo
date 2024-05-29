@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Task} from "../task.model";
+import {Task} from "../../shared/models/task.model";
 import {TaskItemComponent} from "./task-item/task-item.component";
 import {NgForOf} from "@angular/common";
 import {TasksService} from "../tasks.service";

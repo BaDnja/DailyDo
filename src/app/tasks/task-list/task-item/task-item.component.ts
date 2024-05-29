@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {Task} from "../../task.model";
+import {Task} from "../../../shared/models/task.model";
 import {TasksService} from "../../tasks.service";
 import {RouterLink} from "@angular/router";
 

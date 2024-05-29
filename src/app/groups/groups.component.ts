@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgForOf} from "@angular/common";
-import {Group} from "./group.model";
+import {Group} from "../shared/models/group.model";
 import {GroupsService} from "./groups.service";
 import {AlertService} from "../shared/components/alert/alert.service";
 import {AlertTypeEnum} from "../shared/components/alert/types/alertType.enum";

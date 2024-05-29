@@ -1,27 +1,39 @@
 # DailyDo
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.2.
+DailyDo helps user manage their everyday tasks. :ballot_box_with_check:\
+Currently, it operates in browser's local storage.
 
-## Development server
+Spotted a bug?:bug: Feel free to open an issue!
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## How to run
 
-## Code scaffolding
+### Run locally
+**Prerequisites**:
+* Node.js and npm: [npm Docs](#https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. Clone this repository to desired location
+2. Run `npm install`
+3. Run `npm run ng serve`
+4. Go to http://localhost:2400
 
-## Build
+### Run docker container
+**Prerequisites**:
+* [Docker](#https://docs.docker.com/engine/install/)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. Clone this repository to desired location
+2. Run `docker build -t daily-do .`
+3. After successful build, run `docker run -d -p 8080:80 daily-do`
+4. Go to http://localhost:8080
 
-## Running unit tests
+## List of features
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* Tasks, lists and groups CRUD
+  * View list of items (items are any of the above three)
+  * View single item
+  * Add new item
+  * Update item
+  * Delete item
+* Add task to a list, add list to a group
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Data models
+All models can be found in [src/app/shared/models](src/app/shared/models)

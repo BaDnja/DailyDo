@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {List} from "./list.model";
+import {List} from "../shared/models/list.model";
 import {TasksService} from "../tasks/tasks.service";
 import {DataService} from "../shared/services/data/data.service";
 import {StateService} from "../shared/services/state/state.service";

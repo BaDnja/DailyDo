@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ListsService} from "./lists.service";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
-import {List} from "./list.model";
+import {List} from "../shared/models/list.model";
 import {AlertService} from "../shared/components/alert/alert.service";
 import {AlertTypeEnum} from "../shared/components/alert/types/alertType.enum";
 import {NgForOf} from "@angular/common";

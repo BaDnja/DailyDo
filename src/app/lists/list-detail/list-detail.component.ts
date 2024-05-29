@@ -2,14 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {ConfirmationDialogComponent} from "../../shared/components/confirmation-dialog/confirmation-dialog.component";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
-import {List} from "../list.model";
+import {List} from "../../shared/models/list.model";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {ListsService} from "../lists.service";
 import {AlertService} from "../../shared/components/alert/alert.service";
 import {AlertTypeEnum} from "../../shared/components/alert/types/alertType.enum";
-import {Task} from "../../tasks/task.model";
+import {Task} from "../../shared/models/task.model";
 import {TasksService} from "../../tasks/tasks.service";
-import {Group} from "../../groups/group.model";
+import {Group} from "../../shared/models/group.model";
 import {GroupsService} from "../../groups/groups.service";
 
 @Component({

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ListsService} from "../lists/lists.service";
-import {Group} from "./group.model";
+import {Group} from "../shared/models/group.model";
 import {DataService} from "../shared/services/data/data.service";
 import {StateService} from "../shared/services/state/state.service";
 import {LocalStorageKeysEnum} from "../shared/types/localStorageDataTypes.enum";
