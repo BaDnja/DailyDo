@@ -9,7 +9,7 @@ Spotted a bug? :bug: Feel free to open an issue!
 
 ### Run locally
 **Prerequisites**:
-* Node.js and npm: [npm Docs](#https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+* Node.js and npm: [npm Docs](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
 1. Clone this repository to desired location
 2. Run `npm install`
@@ -18,7 +18,7 @@ Spotted a bug? :bug: Feel free to open an issue!
 
 ### Run docker container
 **Prerequisites**:
-* [Docker](#https://docs.docker.com/engine/install/)
+* [Docker](https://docs.docker.com/engine/install/)
 
 1. Clone this repository to desired location
 2. Run `docker build -t daily-do .`
