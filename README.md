@@ -3,7 +3,7 @@
 DailyDo helps user manage their everyday tasks. :ballot_box_with_check:\
 Currently, it operates in browser's local storage.
 
-Spotted a bug?:bug: Feel free to open an issue!
+Spotted a bug? :bug: Feel free to open an issue!
 
 ## How to run
 
@@ -33,7 +33,9 @@ Spotted a bug?:bug: Feel free to open an issue!
   * Add new item
   * Update item
   * Delete item
-* Add task to a list, add list to a group
+* Add task to a list
+* Add list to a group
 
 ### Data models
+
 All models can be found in [src/app/shared/models](src/app/shared/models)
