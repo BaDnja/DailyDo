@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
-    <div class="navbar-header">
+    <div class="navbar-header w-100 d-flex justify-content-between align-items-center">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a routerLink="/" class="nav-link">DailyDo</a>
@@ -11,19 +11,23 @@
         <li class="nav-item">
           <a routerLink="/groups" class="nav-link">Groups</a>
         </li>
-        <div class="dropdown">
-          <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-            Delete data
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" (click)="onClearData(LocalStorageKeysEnum.tasks)">Tasks</a></li>
-            <li><a class="dropdown-item" (click)="onClearData(LocalStorageKeysEnum.lists)">Lists</a></li>
-            <li><a class="dropdown-item" (click)="onClearData(LocalStorageKeysEnum.groups)">Groups</a></li>
-            <li><a class="dropdown-item" (click)="onClearData(LocalStorageKeysEnum.all)">All data</a></li>
-          </ul>
-        </div>
       </ul>
+      <div class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" #searchInput>
+        <button class="btn btn-outline-success" type="button" (click)="onSearch(searchInput.value)">Search</button>
+      </div>
+      <div class="dropdown">
+        <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+          Delete data
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" (click)="onClearData(LocalStorageKeysEnum.tasks)">Tasks</a></li>
+          <li><a class="dropdown-item" (click)="onClearData(LocalStorageKeysEnum.lists)">Lists</a></li>
+          <li><a class="dropdown-item" (click)="onClearData(LocalStorageKeysEnum.groups)">Groups</a></li>
+          <li><a class="dropdown-item" (click)="onClearData(LocalStorageKeysEnum.all)">All data</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>

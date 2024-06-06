@@ -7,10 +7,6 @@
     <button class="btn btn-success" type="submit">Add</button>
   </form>
   <ul *ngFor="let groupElement of groups" class="list-group">
-    <li class="list-group-item">
-      <a [routerLink]="['/groups', groupElement.id]">
-        <label class="form-check-label">{{ groupElement.title }}</label>
-      </a>
-    </li>
+    <app-group-item [group]="groupElement"></app-group-item>
   </ul>
 </div>

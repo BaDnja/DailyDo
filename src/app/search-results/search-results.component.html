@@ -1,0 +1,26 @@
+<div *ngIf="filteredResults$ as results">
+  <div *ngIf="results.tasks.length > 0 || results.lists.length > 0 || results.groups.length > 0; else noResults">
+    <div *ngIf="results.tasks.length > 0">
+      <h3>Tasks</h3>
+      <ul class="list-group">
+        <app-task-item *ngFor="let taskElement of results.tasks"
+                       [task]="taskElement"></app-task-item>
+      </ul>
+    </div>
+    <div *ngIf="results.lists.length > 0">
+      <h3>Lists</h3>
+      <ul class="list-group" *ngFor="let list of results.lists">
+        <app-list-item [list]="list"></app-list-item>
+      </ul>
+    </div>
+    <div *ngIf="results.groups.length > 0">
+      <h3>Groups</h3>
+      <ul class="list-group" *ngFor="let group of results.groups">
+        <app-group-item [group]="group"></app-group-item>
+      </ul>
+    </div>
+  </div>
+  <ng-template #noResults>
+    <div>No results found</div>
+  </ng-template>
+</div>

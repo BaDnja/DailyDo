@@ -22,6 +22,7 @@ import {GroupsService} from "../groups/groups.service";
 export class TopBarComponent {
   showConfirmation: boolean = false;
   dataTypeToDelete!: LocalStorageKeysEnum;
+  protected readonly LocalStorageKeysEnum = LocalStorageKeysEnum;
 
   constructor(private tasksService: TasksService,
               private listsService: ListsService,
@@ -66,5 +67,7 @@ export class TopBarComponent {
     }
   }
 
-  protected readonly LocalStorageKeysEnum = LocalStorageKeysEnum;
+  onSearch(query: string): void {
+    this.router.navigate(['/search'], {queryParams: {q: query}});
+  }
 }
