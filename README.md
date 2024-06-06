@@ -44,3 +44,6 @@ All models can be found in [src/app/shared/models](src/app/shared/models)
   * Removing tasks will remove all tasks from local storage
   * Removing lists will remove all lists, and set listId to empty string for every task associated with the deleted list
   * Removing groups will remove all groups, and set groupId to empty string for every list associated with the deleted group
+* Search/filter data
+  * Searching is implemented as a separate component with its own routing and query parameter.
+  * Data is retrieved from browser's local storage and filtered across all data models.
