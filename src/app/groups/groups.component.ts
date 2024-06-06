@@ -6,6 +6,7 @@ import {GroupsService} from "./groups.service";
 import {AlertService} from "../shared/components/alert/alert.service";
 import {AlertTypeEnum} from "../shared/components/alert/types/alertType.enum";
 import {RouterLink} from "@angular/router";
+import {GroupItemComponent} from "./group-item/group-item.component";
 
 @Component({
   selector: 'app-groups',
@@ -14,7 +15,8 @@ import {RouterLink} from "@angular/router";
     FormsModule,
     NgForOf,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    GroupItemComponent
   ],
   templateUrl: './groups.component.html',
   styleUrl: './groups.component.css'

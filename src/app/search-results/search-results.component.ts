@@ -8,6 +8,8 @@ import {List} from "../shared/models/list.model";
 import {Task} from '../shared/models/task.model';
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {TaskItemComponent} from "../tasks/task-list/task-item/task-item.component";
+import {ListItemComponent} from "../lists/list-item/list-item.component";
+import {GroupItemComponent} from "../groups/group-item/group-item.component";
 
 @Component({
   selector: 'app-search-results',
@@ -16,7 +18,9 @@ import {TaskItemComponent} from "../tasks/task-list/task-item/task-item.componen
     AsyncPipe,
     NgForOf,
     NgIf,
-    TaskItemComponent
+    TaskItemComponent,
+    ListItemComponent,
+    GroupItemComponent
   ],
   templateUrl: './search-results.component.html',
   styleUrl: './search-results.component.css'
