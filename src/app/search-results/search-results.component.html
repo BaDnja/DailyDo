@@ -9,15 +9,15 @@
     </div>
     <div *ngIf="results.lists.length > 0">
       <h3>Lists</h3>
-      <div *ngFor="let list of results.lists">
-        <app-list-item [list]="list" ></app-list-item>
-      </div>
+      <ul class="list-group" *ngFor="let list of results.lists">
+        <app-list-item [list]="list"></app-list-item>
+      </ul>
     </div>
     <div *ngIf="results.groups.length > 0">
       <h3>Groups</h3>
-      <div *ngFor="let group of results.groups">
+      <ul class="list-group" *ngFor="let group of results.groups">
         <app-group-item [group]="group"></app-group-item>
-      </div>
+      </ul>
     </div>
   </div>
   <ng-template #noResults>
